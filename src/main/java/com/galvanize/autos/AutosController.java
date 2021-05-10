@@ -18,10 +18,14 @@ public class AutosController {
         AutosList list;
         if (make == null && color == null) {
             list = autosService.getAutos();
+        } else if (make == null){
+            list = autosService.getAutosByColor(color);
+        } else if (color == null){
+            list = autosService.getAutosByMake(make);
         } else {
             list = autosService.getAutos(color, make);
         }
-        
+
         if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {

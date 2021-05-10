@@ -50,7 +50,7 @@ public class AutosControllerTests {
                 .andExpect(status().isNoContent());
     }
 
-    //- GET: /api/autos?color=blue Returns list of all blue cars in db
+    
     //- GET: /api/autos?make=Volkswagen Returns list of all Volkswagens in db
 
     //- GET: /api/autos?make=Volkswagen&color=blue Returns list of all blue Volkswagens in db
@@ -67,6 +67,22 @@ public class AutosControllerTests {
         mockMvc.perform(get("/api/autos?make=Ford&color=blue"))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.automobiles", hasSize(5)));
+    }
+
+    //- GET: /api/autos?color=blue Returns list of all blue cars in db
+    @Test
+    void getAutos_withParam_returnsListOfAutos() throws Exception {
+        List<Automobile> automobiles = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            automobiles.add(new Automobile("1990"+i, "Ford", "Mustang", "7F03Z0102"+i));
+        }
+
+        when(autosService.getAutosByColor(anyString())).thenReturn(new AutosList(automobiles));
+
+        mockMvc.perform(get("/api/autos?color=blue"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.automobiles", hasSize(5)));
     }
 
     //- POST: /api/autos Returns the created entry
