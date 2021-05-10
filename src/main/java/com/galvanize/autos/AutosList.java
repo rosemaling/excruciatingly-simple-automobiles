@@ -7,6 +7,10 @@ import java.util.List;
 public class AutosList {
 
     private List<Automobile> automobiles;
+    
+    public boolean isEmpty() {
+        return automobiles.isEmpty();
+    }
 
     public AutosList() {
         this.automobiles = new ArrayList<>();

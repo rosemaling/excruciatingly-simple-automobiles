@@ -42,8 +42,13 @@ public class AutosControllerTests {
                 .andExpect(jsonPath("$.automobiles", hasSize(5)));
     }
 
-    
     //- GET: /api/autos Returns 204 when no autos found when no autos in db
+    @Test
+    void getAutos_returnNoContent_whenNotExists() throws Exception {
+        when(autosService.getAutos()).thenReturn(new AutosList());
+        mockMvc.perform(get("/api/autos"))
+                .andExpect(status().isNoContent());
+    }
     //- GET: /api/autos?color=blue Returns list of all blue cars in db
     //- GET: /api/autos?make=Volkswagen Returns list of all Volkswagens in db
     //- GET: /api/autos?make=Volkswagen&color=blue Returns list of all blue Volkswagens in db
