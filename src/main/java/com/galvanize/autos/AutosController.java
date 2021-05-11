@@ -52,4 +52,28 @@ public class AutosController {
                     return ResponseEntity.ok(target);
                 }
     }
+
+    @PatchMapping("/api/autos/{vin}")
+    public ResponseEntity<Automobile> updateAuto(@PathVariable String vin, @RequestBody UpdateOwnerRequest update) {
+        try {
+            Automobile updated = autosService.updateAuto(vin, update.getColor(), update.getOwner());
+
+            updated.setColor(update.getColor());
+            updated.setOwner(update.getOwner());
+
+            return ResponseEntity.ok(updated);
+        } catch (AutoNotFoundException e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @DeleteMapping("/api/autos/{vin}")
+    public ResponseEntity deleteAuto(@PathVariable String vin) {
+        try {
+            autosService.deleteAuto(vin);
+            return ResponseEntity.accepted().build();
+        } catch (AutoNotFoundException e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
 }

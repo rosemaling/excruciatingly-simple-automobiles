@@ -142,10 +142,49 @@ public class AutosControllerTests {
     }
 
     //- PATCH: /api/autos/{vin} Returns the requested auto after PATCH if it exists in db
+    @Test
+    void updateAuto_withVinNumberAndColor_whenExists () throws Exception {
+        Automobile auto = new Automobile(1990, "Ford", "Mustang", "7F03Z0102");
+        when(autosService.updateAuto(anyString(), anyString(), anyString())).thenReturn(auto);
+
+        mockMvc.perform(patch("/api/autos/" + auto.getVin())
+        .contentType(MediaType.APPLICATION_JSON).content("{\"color\":\"pink\",\"owner\":\"Rob\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("color").value("pink"))
+                .andExpect(jsonPath("owner").value("Rob"));
+    }
     //- PATCH: /api/autos{vin} Returns 204 when no autos with corresponding vin number in db
+    @Test
+    void updateAuto_withVinNumberAndColor_badRequest_whenNotExists () throws Exception {
+        doThrow(new AutoNotFoundException()).when(autosService).updateAuto(anyString(), anyString(), anyString());
+        mockMvc.perform(patch("/api/autos/AABBCC")
+                .contentType(MediaType.APPLICATION_JSON).content("{\"color\":\"pink\",\"owner\":\"Rob\"}"))
+                .andExpect(status().isNoContent());
+    }
     //- PATCH: /api/autos{vin} Returns 400 for bad request
+    @Test
+    void updateAuto_throwErrorForBadRequest() throws Exception {
+
+        when(autosService.updateAuto(anyString(), anyString(), anyString())).thenThrow(InvalidAutoException.class);
+        mockMvc.perform(patch("/api/autos/AABBCC").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"year\":1990,\"make\":\"Ford\",\"model\":\"Mustang\",\"color\":\"pink\",\"owner\":\"Rob\",\"vin\":\"7F03Z01025\"}\""))
+                .andExpect(status().isBadRequest());
+    }
 
     //- DELETE: /api/autos/{vin} Returns 202 for successful deletion
+    @Test
+    void deleteAuto_withVin_returnAccepted () throws Exception {
+        mockMvc.perform(delete("/api/autos/AABBCC"))
+                .andExpect(status().isAccepted());
+        verify(autosService).deleteAuto(anyString());
+    }
     //- DELETE: /api/autos{vin} Returns 204 when no autos with corresponding vin number in db
+
+    @Test
+    void deleteAuto_withVin_returnNoContent_whenNotExists () throws Exception {
+        doThrow(new AutoNotFoundException()).when(autosService).deleteAuto(anyString());
+        mockMvc.perform(delete("/api/autos/AABBCC"))
+                .andExpect(status().isNoContent());
+    }
 
 }
