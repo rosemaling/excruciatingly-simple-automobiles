@@ -15,11 +15,11 @@ public class Automobile {
         this.vin = vin;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
