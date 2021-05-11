@@ -28,6 +28,8 @@ public class AutosControllerTests {
     @MockBean
     AutosService autosService;
 
+    ObjectMapper mapper = new ObjectMapper();
+
     //- GET: /api/autos Returns list of all autos in db when autos exist
     @Test
     void getAutos_returnsListOfAutos_whenExists () throws Exception {
@@ -101,7 +103,24 @@ public class AutosControllerTests {
     }
 
     //- POST: /api/autos Returns the created entry
-    //- POST: /api/autos Returns 400 for bad request. e.g. insufficient request body info.
+    @Test
+    void postAutos_returnCreatedAuto() throws Exception {
+        Automobile auto = new Automobile(1990, "Ford", "Mustang", "7F03Z0102");
+        when(autosService.addAuto(any(Automobile.class))).thenReturn(auto);
+        mockMvc.perform(post("/api/autos").contentType(MediaType.APPLICATION_JSON)
+                                        .content(mapper.writeValueAsString(auto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("vin").value("7F03Z0102"));
+    }
+     //- POST: /api/autos Returns 400 for bad request. e.g. insufficient request body info.
+     @Test
+     void postAutos_throwErrorForBadRequest() throws Exception {
+
+         when(autosService.addAuto(any(Automobile.class))).thenThrow(InvalidAutoException.class);
+         mockMvc.perform(post("/api/autos").contentType(MediaType.APPLICATION_JSON)
+                 .content("{\"year\":1990,\"make\":\"Ford\",\"model\":\"Mustang\",\"color\":null,\"owner\":null,\"vin\":\"7F03Z01025\"}\""))
+                 .andExpect(status().isBadRequest());
+     }
 
     //- GET: /api/autos/{vin} Returns the requested auto with vin number if it exist in db
     //- GET: /api/autos{vin} Returns 204 when no autos with corresponding vin number in db
