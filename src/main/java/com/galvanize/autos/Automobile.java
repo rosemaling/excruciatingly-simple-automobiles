@@ -1,14 +1,14 @@
 package com.galvanize.autos;
 
 public class Automobile {
-    private String year;
+    private int year;
     private String make;
     private String model;
     private String color;
     private String owner;
     private String vin;
 
-    public Automobile(String year, String make, String model, String vin) {
+    public Automobile(int year, String make, String model, String vin) {
         this.year = year;
         this.make = make;
         this.model = model;

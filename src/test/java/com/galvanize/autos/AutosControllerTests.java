@@ -32,7 +32,7 @@ public class AutosControllerTests {
         List<Automobile> automobiles = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile("1990"+i, "Ford", "Mustang", "7F03Z0102"+i));
+            automobiles.add(new Automobile(1990+i, "Ford", "Mustang", "7F03Z0102"+i));
         }
 
         when(autosService.getAutos()).thenReturn(new AutosList(automobiles));
@@ -56,7 +56,7 @@ public class AutosControllerTests {
         List<Automobile> automobiles = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile("1990"+i, "Ford", "Mustang", "7F03Z0102"+i));
+            automobiles.add(new Automobile(1990+i, "Ford", "Mustang", "7F03Z0102"+i));
         }
 
         when(autosService.getAutos(anyString(), anyString())).thenReturn(new AutosList(automobiles));
@@ -72,7 +72,7 @@ public class AutosControllerTests {
         List<Automobile> automobiles = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile("1990"+i, "Ford", "Mustang", "7F03Z0102"+i));
+            automobiles.add(new Automobile(1990+i, "Ford", "Mustang", "7F03Z0102"+i));
         }
 
         when(autosService.getAutosByColor(anyString())).thenReturn(new AutosList(automobiles));
@@ -88,7 +88,7 @@ public class AutosControllerTests {
         List<Automobile> automobiles = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile("1990"+i, "Ford", "Mustang", "7F03Z0102"+i));
+            automobiles.add(new Automobile(1990+i, "Ford", "Mustang", "7F03Z0102"+i));
         }
 
         when(autosService.getAutosByMake(anyString())).thenReturn(new AutosList(automobiles));
