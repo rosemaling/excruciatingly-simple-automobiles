@@ -42,4 +42,14 @@ public class AutosController {
     public void invalidAutoExceptionHandler(InvalidAutoException e) {
 
     }
+    
+    @GetMapping("/api/autos/{vin}")
+    public ResponseEntity<Automobile> getAuto(@PathVariable String vin) {
+        Automobile target = autosService.getAuto(vin);
+                if (target == null) {
+                    return ResponseEntity.noContent().build();
+                } else {
+                    return ResponseEntity.ok(target);
+                }
+    }
 }

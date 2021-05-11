@@ -8,6 +8,9 @@ public class Automobile {
     private String owner;
     private String vin;
 
+    public Automobile() {
+    }
+
     public Automobile(int year, String make, String model, String vin) {
         this.year = year;
         this.make = make;

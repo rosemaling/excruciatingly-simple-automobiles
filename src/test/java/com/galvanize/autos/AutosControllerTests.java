@@ -123,7 +123,23 @@ public class AutosControllerTests {
      }
 
     //- GET: /api/autos/{vin} Returns the requested auto with vin number if it exist in db
+    @Test
+    void getAuto_withVinNumber_returnsAutomobile () throws Exception {
+        Automobile auto = new Automobile(1990, "Ford", "Mustang", "7F03Z0102");
+        when(autosService.getAuto(anyString())).thenReturn(auto);
+
+        mockMvc.perform(get("/api/autos/" + auto.getVin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("make").value("Ford"));
+    }
     //- GET: /api/autos{vin} Returns 204 when no autos with corresponding vin number in db
+    @Test
+    void getAuto_withVinNumber_noContent_whenVinNotExists () throws Exception {
+        when(autosService.getAuto(anyString())).thenReturn(null);
+
+        mockMvc.perform(get("/api/autos/ghfvhgfg5456"))
+                .andExpect(status().isNoContent());
+    }
 
     //- PATCH: /api/autos/{vin} Returns the requested auto after PATCH if it exists in db
     //- PATCH: /api/autos{vin} Returns 204 when no autos with corresponding vin number in db
