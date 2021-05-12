@@ -3,6 +3,7 @@ package com.galvanize.autos;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AutosService {
@@ -51,6 +52,13 @@ public class AutosService {
     }
 
     public Automobile updateAuto(String vin, String color, String owner) {
+        Optional<Automobile> target = autoRepository.findByVin(vin);
+
+        if (target.isPresent()) {
+            target.get().setColor(color);
+            target.get().setOwner(owner);
+            return autoRepository.save(target.get());
+        }
         return null;
     }
 
