@@ -47,7 +47,7 @@ public class AutosService {
     }
     
     public Automobile getAuto (String vin) {
-        return null;
+        return autoRepository.findByVin(vin).orElse(null);
     }
 
     public Automobile updateAuto(String vin, String color, String owner) {
