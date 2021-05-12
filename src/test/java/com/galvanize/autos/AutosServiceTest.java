@@ -27,7 +27,7 @@ class AutosServiceTest {
     }
 
     @Test
-    void getAutos() {
+    void getAutos_noParams_returnAutosList() {
         Automobile auto = new Automobile(1990, "Ford", "Mustang", "7F03Z0102");
         when(autoRepository.findAll()).thenReturn(Arrays.asList(auto));
         AutosList autosList;
