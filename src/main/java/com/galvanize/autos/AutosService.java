@@ -43,7 +43,7 @@ public class AutosService {
     }
 
     public Automobile addAuto(Automobile auto) {
-        return null;
+        return autoRepository.save(auto);
     }
     
     public Automobile getAuto (String vin) {
