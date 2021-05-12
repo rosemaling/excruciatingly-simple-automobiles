@@ -27,10 +27,18 @@ public class AutosService {
     }
 
     public AutosList getAutosByColor (String color) {
+        List<Automobile> autos = autoRepository.findByColor(color);
+        if (!autos.isEmpty()) {
+            return new AutosList(autos);
+        }
         return null;
     }
 
     public AutosList getAutosByMake (String make) {
+        List<Automobile> autos = autoRepository.findByMake(make);
+        if (!autos.isEmpty()) {
+            return new AutosList(autos);
+        }
         return null;
     }
 

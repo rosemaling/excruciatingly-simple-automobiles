@@ -48,11 +48,22 @@ class AutosServiceTest {
     }
 
     @Test
-    void getAutosByColor() {
+    void getAutosByColor_withColor_returnAutosList() {
+        Automobile auto = new Automobile(1990, "Ford", "Mustang", "7F03Z0102");
+        auto.setColor("Pink");
+        when(autoRepository.findByColor(anyString())).thenReturn(Arrays.asList(auto));
+        AutosList autosList = autoService.getAutosByColor("Pink");
+        assertThat(autosList).isNotNull();
+        assertThat(autosList.isEmpty()).isFalse();
     }
 
     @Test
-    void getAutosByMake() {
+    void getAutosByMake_withMake_returnAutosList() {
+        Automobile auto = new Automobile(1990, "Ford", "Mustang", "7F03Z0102");
+        when(autoRepository.findByMake(anyString())).thenReturn(Arrays.asList(auto));
+        AutosList autosList = autoService.getAutosByMake("Ford");
+        assertThat(autosList).isNotNull();
+        assertThat(autosList.isEmpty()).isFalse();
     }
 
     @Test
