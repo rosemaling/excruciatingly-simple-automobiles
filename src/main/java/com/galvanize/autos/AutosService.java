@@ -4,9 +4,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AutosService {
-    public AutosList getAutos() {
-        return null;
+
+    private AutoRepository autoRepository;
+
+    public AutosService(AutoRepository autoRepository) {
+        this.autoRepository = autoRepository;
     }
+
+    public AutosList getAutos() {
+        AutosList autosList = new AutosList(autoRepository.findAll());
+        return autosList;
+    }
+
+
     public AutosList getAutos(String color, String make) {
         return null;
     }
