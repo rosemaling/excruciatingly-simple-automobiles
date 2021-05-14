@@ -21,7 +21,9 @@ public class Automobile {
     private String color;
     @Column(name = "owner_name")
     private String owner;
+    @Column(unique = true)
     private String vin;
+
     @JsonFormat(pattern = "MM/dd/yyyy")
     private Date purchaseDate;
 
@@ -33,6 +35,14 @@ public class Automobile {
         this.make = make;
         this.model = model;
         this.vin = vin;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 
     public int getYear() {
