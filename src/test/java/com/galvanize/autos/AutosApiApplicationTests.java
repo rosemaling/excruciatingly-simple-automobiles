@@ -82,9 +82,10 @@ class AutosApiApplicationTests {
 
     @Test
     void addAuto_returnCreatedAuto(){
-        int index = r.nextInt(72);
-        Automobile auto = testAutos.get(index);
+        Automobile auto = new Automobile(1990, "Volkswagen", "Beetle", "IAMUNIQUE");
         String vin = auto.getVin();
+
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<Automobile> request = new HttpEntity<>(auto, headers);
